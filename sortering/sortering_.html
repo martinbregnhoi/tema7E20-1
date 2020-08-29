@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+
+            font-family: sans-serif;
+            -webkit-text-stroke: 1px black;
+            -webkit-text-fill-color: white;
+        }
+
+        img {
+
+            width: 100%;
+            border-radius: 25px;
+
+        }
+
+        main {
+            padding: 10vw;
+        }
+
+        #list {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 2px;
+        }
+
+        article {
+            border: 1px grey solid;
+            border-radius: 25px;
+            padding: 12.5px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /*            box-sizing:border-box;*/
+        }
+    </style>
+</head>
+
+<body>
+    <template>
+        <article>
+            <h2></h2>
+            <img src="" alt="">
+
+        </article>
+
+    </template>
+    <main>
+        <section id="list"></section>
+
+    </main>
+
+
+
+
+    <script>
+        let personer;
+        document.addEventListener("DOMContentLoaded", loadJSON)
+
+        async function loadJSON() {
+            const JSONData = await fetch("https://spreadsheets.google.com/feeds/list/1mtHhpoEkYqVqr1TSnKQ1_sQZWI7FRVjcw3H1oatDOVQ/od6/public/values?alt=json");
+            personer = await JSONData.json();
+            visPersoner();
+            //console.log(personer);
+        }
+
+        function visPersoner() {
+            const templatePointer = document.querySelector("template");
+            const listPointer = document.querySelector("#list");
+            personer.feed.entry.forEach(person => {
+                console.log(person);
+                const minKlon = templatePointer.cloneNode(true).content;
+                minKlon.querySelector("h2").textContent = person.gsx$navn.$t;
+                minKlon.querySelector("img").src = person.gsx$billede.$t;
+                listPointer.appendChild(minKlon);
+
+            })
+
+
+        }
+    </script>
+</body></html>
