@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +20,7 @@
         }
 
         main {
-            padding: 0 10vw;
+            padding: 0 10vw ;
         }
 
         #list {
@@ -53,16 +52,11 @@
         </article>
 
     </template>
-    <main>
-       <header>
-           <button class="filter valgt" data-køn="alle">Alle</button>
-           <button class="filter" data-køn="m">Mænd</button>
-           <button class="filter" data-køn="k">Kvinder</button>
-           <button class="filter" data-køn="andet">Andet</button>
-       </header>
-        <h1>Overskrift</h1>
 
+    <main>
+         <h1>Overskrift</h1>
         <section id="list">
+
 
         </section>
 
@@ -73,7 +67,6 @@
 
     <script>
         let personer;
-        let filter = "k";
         document.addEventListener("DOMContentLoaded", loadJSON)
 
         async function loadJSON() {
@@ -87,13 +80,12 @@
             const templatePointer = document.querySelector("template");
             const listPointer = document.querySelector("#list");
             personer.feed.entry.forEach(person => {
-                if (filter == person.gsx$køn.$t) {
-                    console.log(person);
-                    const minKlon = templatePointer.cloneNode(true).content;
-                    minKlon.querySelector("h2").textContent = person.gsx$navn.$t;
-                    minKlon.querySelector("img").src = person.gsx$billede.$t;
-                    listPointer.appendChild(minKlon);
-                }
+                console.log(person);
+                const minKlon = templatePointer.cloneNode(true).content;
+                minKlon.querySelector("h2").textContent = person.gsx$navn.$t;
+                minKlon.querySelector("img").src = person.gsx$billede.$t;
+                listPointer.appendChild(minKlon);
+
             })
 
 

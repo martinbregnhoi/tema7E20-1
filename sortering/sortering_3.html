@@ -6,11 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <style>
+        header {
+            display: flex;
+            justify-content: center;
+        }
+
         body {
 
             font-family: sans-serif;
             -webkit-text-stroke: 1px black;
             -webkit-text-fill-color: white;
+        }
+
+        .valgt {
+            -webkit-text-stroke: 1px red;
+            -webkit-text-fill-color: red;
+
         }
 
         img {
@@ -54,12 +65,12 @@
 
     </template>
     <main>
-       <header>
-           <button class="filter valgt" data-køn="alle">Alle</button>
-           <button class="filter" data-køn="m">Mænd</button>
-           <button class="filter" data-køn="k">Kvinder</button>
-           <button class="filter" data-køn="andet">Andet</button>
-       </header>
+        <header>
+            <button class="filter valgt" data-køn="alle">Alle</button>
+            <button class="filter" data-køn="m">Mænd</button>
+            <button class="filter" data-køn="k">Kvinder</button>
+            <button class="filter" data-køn="andet">Andet</button>
+        </header>
         <h1>Overskrift</h1>
 
         <section id="list">
@@ -73,21 +84,24 @@
 
     <script>
         let personer;
-        let filter = "k";
+        let filter = "alle";
         document.addEventListener("DOMContentLoaded", loadJSON)
 
         async function loadJSON() {
             const JSONData = await fetch("https://spreadsheets.google.com/feeds/list/1mtHhpoEkYqVqr1TSnKQ1_sQZWI7FRVjcw3H1oatDOVQ/od6/public/values?alt=json");
             personer = await JSONData.json();
+            addEventListenersToButtons();
             visPersoner();
 
         }
 
         function visPersoner() {
+
             const templatePointer = document.querySelector("template");
             const listPointer = document.querySelector("#list");
+            listPointer.innerHTML = "";
             personer.feed.entry.forEach(person => {
-                if (filter == person.gsx$køn.$t) {
+                if (filter == "alle" || filter == person.gsx$køn.$t) {
                     console.log(person);
                     const minKlon = templatePointer.cloneNode(true).content;
                     minKlon.querySelector("h2").textContent = person.gsx$navn.$t;
@@ -97,6 +111,21 @@
             })
 
 
+        }
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach((btn) => {
+
+                btn.addEventListener("click", filterBTNs);
+
+            });
+
+
+        }
+
+        function filterBTNs() {
+            filter = this.dataset.køn;
+            visPersoner();
         }
     </script>
 </body></html>
