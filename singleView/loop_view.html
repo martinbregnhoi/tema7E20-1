@@ -140,7 +140,7 @@
         function filterBTNs() {
             filter = this.dataset.køn;
             document.querySelector("h1").textContent = this.textContent;
-            document.querySelectorAll(".filter").forEach((btn) => {
+            document.querySelectorAll(".filter").forEach(function(btn){
 
                 btn.classList.remove("valgt");
             })
