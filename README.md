@@ -1,1 +1,2 @@
-# tema7
+# tema7 
+filer og opgaver
